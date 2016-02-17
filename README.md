@@ -1,2 +1,2 @@
-# temporary_name_repo
+# Three axes gang
 Репозиторій для основної частини коду программи.<br />
