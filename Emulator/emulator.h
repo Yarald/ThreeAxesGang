@@ -48,9 +48,13 @@ void prStr_CrdClr(int x, int y, int color, char * line);
 void prInt_CrdClr(int x, int y, int color, int number);
 void clearWorkspace(int x1, int y1, int x2, int y2);
 //Lamp drawing functions
-void DrawLamp(int x, int y, Lamp_T self);
-void DrawLampList(LampList_T * lamp_list);
+void drawLamp(int x, int y, Lamp_T self);
+void drawLampList(LampList_T * lamp_list);
 //Text drawing functions
-void DrawAboutMenu();
+void drawAboutMenu();
+void drawAboutMenu_TurnOnOffOne();
 //Lamp logic functions
-void LampList_constructor(LampList_T * lamp_list);
+void lampList_constructor(LampList_T * lamp_list);
+void lampList_turnOnAll(LampList_T * lamp_list);
+void lampList_turnOffAll(LampList_T * lamp_list);
+int lampList_turnOnOffOne(LampList_T * lamp_list, int id);

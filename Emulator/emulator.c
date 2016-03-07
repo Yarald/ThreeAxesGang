@@ -71,11 +71,8 @@ void clearWorkspace(int x1, int y1, int x2, int y2)
 }
 
 //Draw a 5x5 lamp on the (x,y) position.
-void DrawLamp(int x, int y, Lamp_T self)
+void drawLamp(int x, int y, Lamp_T self)
 {
-    if(self.state == OFF) {
-        return;
-    }
     int i, j;
     for (i = y; i < y+3; i++)
     {
@@ -91,20 +88,20 @@ void DrawLamp(int x, int y, Lamp_T self)
 }
 
 //Draw all lamps + their id`s
-void DrawLampList(LampList_T * lamp_list)
+void drawLampList(LampList_T * lamp_list)
 {
     int x = DRAW_ALL_LAMPS_START_POS_X, y = DRAW_ALL_LAMPS_START_POS_Y;
     int i;
     //Draw 1-4 lamps
     for(i = 0; i < LAMPS_MAX_COUNT / 2; i++) {
-        DrawLamp(x, y, lamp_list->list[i]);
+        drawLamp(x, y, lamp_list->list[i]);
         x += 7;
     }
     //Draw 5-8 lamps
     x = DRAW_ALL_LAMPS_START_POS_X, y = DRAW_ALL_LAMPS_START_POS_Y;
     y += 8;
     for(i = 0; i < LAMPS_MAX_COUNT / 2; i++) {
-        DrawLamp(x, y, lamp_list->list[i + 3]);
+        drawLamp(x, y, lamp_list->list[i + 4]);
         x += 7;
     }
     //Draw 1-4 id`s
@@ -124,8 +121,9 @@ void DrawLampList(LampList_T * lamp_list)
 }
 
 //Draw 'About' menu with help for user.
-void DrawAboutMenu()
+void drawAboutMenu()
 {
+    clearWorkspace(USER_INPUT_X, COMMAND_WINDOW_Y_END + 1, COMMAND_WINDOW_X_END - 1, CONSOLE_HEIGHT - 2);
     setCoord(USER_INPUT_X, COMMAND_WINDOW_Y_END + 2);
     setColor(STANDART_COLOR);
     printf("\"1\"-switch all lamps on/off.");
@@ -140,16 +138,57 @@ void DrawAboutMenu()
     setCoord(USER_INPUT_X,USER_INPUT_Y);
 }
 
-//Initialize the lamp list with default numbers.
-void LampList_constructor(LampList_T * lamp_list)
+void drawAboutMenu_TurnOnOffOne()
 {
-    int i;
-    for(i = 0; i < LAMPS_MAX_COUNT; i++)
+    clearWorkspace(USER_INPUT_X, COMMAND_WINDOW_Y_END + 1, COMMAND_WINDOW_X_END - 1, CONSOLE_HEIGHT - 2);
+    setCoord(USER_INPUT_X, COMMAND_WINDOW_Y_END + 2);
+    setColor(STANDART_COLOR);
+    printf("\"n\"- to switch on/off n-th lamp.");
+    setCoord(USER_INPUT_X, COMMAND_WINDOW_Y_END + 3);
+    printf("n here is the lamp id.");
+    setCoord(USER_INPUT_X, COMMAND_WINDOW_Y_END + 5);
+    printf("Example: | >4 [enter] |");
+    setCoord(USER_INPUT_X,USER_INPUT_Y);
+}
+
+//Initialize the lamp list with default numbers.
+void lampList_constructor(LampList_T * lamp_list)
+{
+    for(int i = 0; i < LAMPS_MAX_COUNT; i++)
     {
         lamp_list->list[i].id = i + 1;
-        //!!!!!
-        lamp_list->list[i].color = RED;
-        //!!!!!
-        lamp_list->list[i].state = ON;
+        lamp_list->list[i].color = NOCOLOR;
+        lamp_list->list[i].state = OFF;
     }
+}
+
+//Turn on all the lamps.
+void lampList_turnOnAll(LampList_T * lamp_list) {
+    for(int i = 0; i < LAMPS_MAX_COUNT; i++) {
+        lamp_list->list[i].state = ON;
+        lamp_list->list[i].color = WHITE;
+    }
+}
+
+//Turn off all the lamps.
+void lampList_turnOffAll(LampList_T * lamp_list) {
+    for(int i = 0; i < LAMPS_MAX_COUNT; i++) {
+        lamp_list->list[i].state = OFF;
+        lamp_list->list[i].color = NOCOLOR;
+    }
+}
+
+//Turn on/off only the one lamp.
+int lampList_turnOnOffOne(LampList_T * lamp_list, int id) {
+    if(id < 1 || id > LAMPS_MAX_COUNT)
+        return (0);
+    if(lamp_list->list[id - 1].state == OFF) {
+        lamp_list->list[id - 1].state = ON;
+        lamp_list->list[id - 1].color = WHITE;
+    }
+    else {
+        lamp_list->list[id - 1].state = OFF;
+        lamp_list->list[id - 1].color = NOCOLOR;
+    }
+    return (1);
 }
