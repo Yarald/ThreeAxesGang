@@ -58,3 +58,10 @@ void lampList_constructor(LampList_T * lamp_list);
 void lampList_turnOnAll(LampList_T * lamp_list);
 void lampList_turnOffAll(LampList_T * lamp_list);
 int lampList_turnOnOffOne(LampList_T * lamp_list, int id);
+//SEREZHA + FEDYA
+void lampList_changeBrigthnessAll(LampList_T * lamp_list, int id);
+int lampList_changeBrightnessOne(LampList_T * lamp_list, int id);
+//VLAD + BORYA
+void lampList_changeColorAll(LampList_T * lamp_list, int id);
+void lampList_changeColorOne(LampList_T * lamp_list, int id);
+//void lampList_newYearMode - choose your own paramenters - this is your function.
