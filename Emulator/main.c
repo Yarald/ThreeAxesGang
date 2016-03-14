@@ -95,11 +95,52 @@ int main()
             lampList_changeBrightnessAll(&lampList, userInput_brght);
             drawAboutMenu();
         }
-        //PASTE HERE
-
-        //HERE!!!
-
-        //PASTER HERE
+        //change brightness for one lamp
+        else if (tolower(userInput_function) == '4') {
+            int userInput_brght;
+            int userInput_id;
+            drawAboutMenu_ChangeBrghtOne();
+            prStr_CrdClr(userInput_curX, userInput_curY, STANDART_COLOR, "Switching brightness - one lamps");
+            userInput_curY++;
+            prStr_CrdClr(userInput_curX, userInput_curY, STANDART_COLOR, "Lamp id:");
+            userInput_curY++;
+            //get the user input - lamp id
+            setCoord(userInput_curX, userInput_curY);
+            char ch;
+            while(scanf("%d", &userInput_id) != 1 || userInput_id > 8 || userInput_id < 1) {
+                while((ch = getchar()) != '\n') continue; //read only first symbol
+                clearWorkspace(userInput_curX, userInput_curY, COMMAND_WINDOW_X_END - 1, userInput_curY + 3);
+                setCoord(userInput_curX, userInput_curY);
+            }
+            userInput_curY++;
+            prStr_CrdClr(userInput_curX, userInput_curY, STANDART_COLOR, "Lamp brightness:");
+            userInput_curY++;
+            //get the user input - brightness
+            setCoord(userInput_curX, userInput_curY);
+            char ch2;
+            while(scanf("%d", &userInput_brght) != 1 || userInput_brght > 1 || userInput_brght < 0) {
+                while((ch2 = getchar()) != '\n') continue; //read only first symbol
+                clearWorkspace(userInput_curX, userInput_curY, COMMAND_WINDOW_X_END - 1, userInput_curY + 3);
+                setCoord(userInput_curX, userInput_curY);
+            }
+            userInput_curY++;
+            lampList_changeBrightnessOne(&lampList, userInput_brght, userInput_id - 1);
+            drawAboutMenu();
+        }
+        //change color for one lamp
+        else if (tolower(userInput_function) == '5')  {
+            prStr_CrdClr(userInput_curX, userInput_curY, STANDART_COLOR, "Switching the color for n-th lamp...");
+            userInput_curY++;
+            prStr_CrdClr(userInput_curX, userInput_curY, STANDART_COLOR, "Done by BorzychV & LemeshkoB");
+            userInput_curY++;
+        }
+        //New year mode
+         else if (tolower(userInput_function) == '6')  {
+            prStr_CrdClr(userInput_curX, userInput_curY, STANDART_COLOR, "Enabling New Year mode...");
+            userInput_curY++;
+            prStr_CrdClr(userInput_curX, userInput_curY, STANDART_COLOR, "Done by BorzychV & LemeshkoB");
+            userInput_curY++;
+        }
         //wrong input
         else {
             prStr_CrdClr(userInput_curX, userInput_curY, STANDART_COLOR, "Wrong input. Look at the list below.");
