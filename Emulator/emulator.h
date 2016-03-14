@@ -15,13 +15,19 @@
 #define DRAW_ALL_LAMPS_START_POS_Y 5
 #define USER_INPUT_X 2
 #define USER_INPUT_Y 3
+#define DARK 128
+
+typedef enum LAMP_BRGHT_E{
+    LOW = 0,
+    HIGH = 1
+} LAMP_BRGHT_ET;
 
 typedef enum LAMP_COLOR_E{
     NOCOLOR = 256,
-    WHITE = 241,
+    WHITE = 240,
     RED = 192,
-    GREEN = 32,
-    BLUE = 146
+    GREEN = 160,
+    BLUE = 144
 } LAMP_COLOR_ET;
 
 typedef enum LAMP_STATE_E{
@@ -32,7 +38,9 @@ typedef enum LAMP_STATE_E{
 typedef struct Lamp_S {
     int id;
     LAMP_COLOR_ET color;
+    LAMP_BRGHT_ET brght;
     LAMP_STATE_ET state;
+
 } Lamp_T;
 
 typedef struct LampList_S {
@@ -47,21 +55,27 @@ void drawAllBorders();
 void prStr_CrdClr(int x, int y, int color, char * line);
 void prInt_CrdClr(int x, int y, int color, int number);
 void clearWorkspace(int x1, int y1, int x2, int y2);
+
 //Lamp drawing functions
 void drawLamp(int x, int y, Lamp_T self);
 void drawLampList(LampList_T * lamp_list);
-//Text drawing functions
+
+//About functions
 void drawAboutMenu();
 void drawAboutMenu_TurnOnOffOne();
+void drawAboutMenu_ChangeBrght();
+void drawAboutMenu_ChangeBrghtOne();
+
 //Lamp logic functions
 void lampList_constructor(LampList_T * lamp_list);
+
 void lampList_turnOnAll(LampList_T * lamp_list);
 void lampList_turnOffAll(LampList_T * lamp_list);
-int lampList_turnOnOffOne(LampList_T * lamp_list, int id);
-//SEREZHA + FEDYA
-void lampList_changeBrigthnessAll(LampList_T * lamp_list, int id);
-int lampList_changeBrightnessOne(LampList_T * lamp_list, int id);
+void lampList_turnOnOffOne(LampList_T * lamp_list, int id);
+void lampList_changeBrightnessAll(LampList_T * lamp_list, int id_brightness);
+void lampList_changeBrightnessOne(LampList_T * lamp_list, int id_brightness, int id);
+
 //VLAD + BORYA
 void lampList_changeColorAll(LampList_T * lamp_list, int id);
-int lampList_changeColorOne(LampList_T * lamp_list, int id);
+void lampList_changeColorOne(LampList_T * lamp_list, int id);
 //void lampList_newYearMode - choose your own paramenters - this is your function.

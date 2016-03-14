@@ -10,7 +10,8 @@ int main()
     LampList_T lampList;
     char userInput_function;
     int userInput_curX, userInput_curY;
-    int switchAll_ON_OFF = 1; //if 0 - turn the lights off. if 1 - turn the lights on.
+    //if 0 - turn the lights off. if 1 - turn the lights on.
+    int switchAll_ON_OFF = 1;
     //Initialize the main set of lamps.
     lampList_constructor(&lampList);
     //Initialize the default console size.
@@ -20,17 +21,16 @@ int main()
     drawAllBorders();
     drawLampList(&lampList);
     //Get the user input and do the main algorithm
-    prStr_CrdClr(2,2, STANDART_COLOR, "DUSO - TAG team");
+    prStr_CrdClr(2,2, STANDART_COLOR, "DUSO - ThreeAxesGang");
     userInput_curX = 4;
     userInput_curY = 3;
     prStr_CrdClr(2,3, STANDART_COLOR, ">>");
     setCoord(userInput_curX, userInput_curY);
-    while(tolower((userInput_function = getchar())) != 'x')
-    {
+    while(tolower((userInput_function = getchar())) != 'x') {
         userInput_curY++;
         //Take only the first character.
         while(getchar() != '\n') continue;
-        //Start of the if-else conditions ladder.
+        //Turn all lamps on/off
         if(tolower(userInput_function) == '1') {
             if(switchAll_ON_OFF == 1) {
                 prStr_CrdClr(userInput_curX, userInput_curY, STANDART_COLOR, "Switching on all lamps...");
@@ -51,6 +51,7 @@ int main()
                 userInput_curY = 1;
             }
         }
+        //turn one lamp on/off
         else if (tolower(userInput_function) == '2') {
             int userInput_lampID;
             drawAboutMenu_TurnOnOffOne();
@@ -74,18 +75,32 @@ int main()
             //In the end - redraw 'about' menu.
             drawAboutMenu();
         }
+        //change brightness for all lamps
         else if (tolower(userInput_function) == '3') {
-            prStr_CrdClr(userInput_curX, userInput_curY, STANDART_COLOR, "Switching the brightness for n-th lamp");
+            int userInput_brght;
+            drawAboutMenu_ChangeBrght();
+            prStr_CrdClr(userInput_curX, userInput_curY, STANDART_COLOR, "Switching brightness - all lamps");
             userInput_curY++;
-            prStr_CrdClr(userInput_curX, userInput_curY, STANDART_COLOR, "Done by AndrienkoF & RomaniykS");
+            prStr_CrdClr(userInput_curX, userInput_curY, STANDART_COLOR, "What brightness:");
             userInput_curY++;
+            //get the user input - id
+            setCoord(userInput_curX, userInput_curY);
+            char ch;
+            while(scanf("%d", &userInput_brght) != 1 || userInput_brght > 1 || userInput_brght < 0) {
+                while((ch = getchar()) != '\n') continue; //read only first symbol
+                clearWorkspace(userInput_curX, userInput_curY, COMMAND_WINDOW_X_END - 1, userInput_curY + 3);
+                setCoord(userInput_curX, userInput_curY);
+            }
+            userInput_curY++;
+            lampList_changeBrightnessAll(&lampList, userInput_brght);
+            drawAboutMenu();
         }
-        else if (tolower(userInput_function) == '4') {
-            prStr_CrdClr(userInput_curX, userInput_curY, STANDART_COLOR, "Switching the color for n-th lamp");
-            userInput_curY++;
-            prStr_CrdClr(userInput_curX, userInput_curY, STANDART_COLOR, "Done by BorzychV & LemeshkoB");
-            userInput_curY++;
-        }
+        //PASTE HERE
+
+        //HERE!!!
+
+        //PASTER HERE
+        //wrong input
         else {
             prStr_CrdClr(userInput_curX, userInput_curY, STANDART_COLOR, "Wrong input. Look at the list below.");
             userInput_curY++;
