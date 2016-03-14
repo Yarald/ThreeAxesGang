@@ -47,6 +47,9 @@ typedef struct LampList_S {
     Lamp_T list[LAMPS_MAX_COUNT];
 } LampList_T;
 
+//main function - run the program!
+void run();
+
 //Console drawing functions
 void setCoord(int x, int y);
 void setColor(int color);
