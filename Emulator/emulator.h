@@ -65,6 +65,7 @@ void drawAboutMenu();
 void drawAboutMenu_TurnOnOffOne();
 void drawAboutMenu_ChangeBrght();
 void drawAboutMenu_ChangeBrghtOne();
+void drawAboutMenu_ChangeColorAll();
 
 //Lamp logic functions
 void lampList_constructor(LampList_T * lamp_list);
@@ -74,8 +75,11 @@ void lampList_turnOffAll(LampList_T * lamp_list);
 void lampList_turnOnOffOne(LampList_T * lamp_list, int id);
 void lampList_changeBrightnessAll(LampList_T * lamp_list, int id_brightness);
 void lampList_changeBrightnessOne(LampList_T * lamp_list, int id_brightness, int id);
+void lampList_changeColorAll(LampList_T * lamp_list, int self_color);
+void lampList_changeColorOne(LampList_T * lamp_list, int id, int self_color);
 
-//VLAD + BORYA
-void lampList_changeColorAll(LampList_T * lamp_list, int id);
-void lampList_changeColorOne(LampList_T * lamp_list, int id);
-//void lampList_newYearMode - choose your own paramenters - this is your function.
+//Some cool stuff here!
+void drawAboutMenu_Modes();
+void ModeStep1(LampList_T * lamp_list);
+void ModeStep2(LampList_T * lamp_list);
+void ModeStep3(LampList_T * lamp_list);
