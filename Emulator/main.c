@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <windows.h>
 
 #include "emulator.h"
 
@@ -26,25 +27,30 @@ int main()
     userInput_curY = 3;
     prStr_CrdClr(2,3, STANDART_COLOR, ">>");
     setCoord(userInput_curX, userInput_curY);
-    while(tolower((userInput_function = getchar())) != 'x') {
+    while(tolower((userInput_function = getchar())) != 'x')
+    {
         userInput_curY++;
         //Take only the first character.
         while(getchar() != '\n') continue;
         //Turn all lamps on/off
-        if(tolower(userInput_function) == '1') {
-            if(switchAll_ON_OFF == 1) {
+        if(tolower(userInput_function) == '1')
+        {
+            if(switchAll_ON_OFF == 1)
+            {
                 prStr_CrdClr(userInput_curX, userInput_curY, STANDART_COLOR, "Switching on all lamps...");
                 userInput_curY++;
                 lampList_turnOnAll(&lampList);
                 switchAll_ON_OFF = 0;
             }
-            else if (switchAll_ON_OFF == 0) {
+            else if (switchAll_ON_OFF == 0)
+            {
                 prStr_CrdClr(userInput_curX, userInput_curY, STANDART_COLOR, "Switching off all lamps...");
                 userInput_curY++;
                 lampList_turnOffAll(&lampList);
                 switchAll_ON_OFF = 1;
             }
-            else {
+            else
+            {
                 system("cls");
                 prStr_CrdClr(0,0,STANDART_COLOR, "Fatal error in the \"userInput_function == '1'\" function");
                 userInput_curX = 0;
@@ -52,7 +58,8 @@ int main()
             }
         }
         //turn one lamp on/off
-        else if (tolower(userInput_function) == '2') {
+        else if (tolower(userInput_function) == '2')
+        {
             int userInput_lampID;
             drawAboutMenu_TurnOnOffOne();
             prStr_CrdClr(userInput_curX, userInput_curY, STANDART_COLOR, "Switching on/off n-th lamp");
@@ -65,7 +72,8 @@ int main()
             setCoord(userInput_curX, userInput_curY);
             userInput_curX-=2;
             char ch;
-            while(scanf("%d", &userInput_lampID) != 1 || userInput_lampID < 1 || userInput_lampID > 8) {
+            while(scanf("%d", &userInput_lampID) != 1 || userInput_lampID < 1 || userInput_lampID > 8)
+            {
                 while((ch = getchar()) != '\n') continue; //read only the first symbol.
                 clearWorkspace(userInput_curX, userInput_curY, COMMAND_WINDOW_X_END - 1, userInput_curY + 3);
                 setCoord(userInput_curX, userInput_curY);
@@ -76,7 +84,8 @@ int main()
             drawAboutMenu();
         }
         //change brightness for all lamps
-        else if (tolower(userInput_function) == '3') {
+        else if (tolower(userInput_function) == '3')
+        {
             int userInput_brght;
             drawAboutMenu_ChangeBrght();
             prStr_CrdClr(userInput_curX, userInput_curY, STANDART_COLOR, "Switching brightness - all lamps");
@@ -86,7 +95,8 @@ int main()
             //get the user input - id
             setCoord(userInput_curX, userInput_curY);
             char ch;
-            while(scanf("%d", &userInput_brght) != 1 || userInput_brght > 1 || userInput_brght < 0) {
+            while(scanf("%d", &userInput_brght) != 1 || userInput_brght > 1 || userInput_brght < 0)
+            {
                 while((ch = getchar()) != '\n') continue; //read only first symbol
                 clearWorkspace(userInput_curX, userInput_curY, COMMAND_WINDOW_X_END - 1, userInput_curY + 3);
                 setCoord(userInput_curX, userInput_curY);
@@ -96,7 +106,8 @@ int main()
             drawAboutMenu();
         }
         //change brightness for one lamp
-        else if (tolower(userInput_function) == '4') {
+        else if (tolower(userInput_function) == '4')
+        {
             int userInput_brght;
             int userInput_id;
             drawAboutMenu_ChangeBrghtOne();
@@ -107,7 +118,8 @@ int main()
             //get the user input - lamp id
             setCoord(userInput_curX, userInput_curY);
             char ch;
-            while(scanf("%d", &userInput_id) != 1 || userInput_id > 8 || userInput_id < 1) {
+            while(scanf("%d", &userInput_id) != 1 || userInput_id > 8 || userInput_id < 1)
+            {
                 while((ch = getchar()) != '\n') continue; //read only first symbol
                 clearWorkspace(userInput_curX, userInput_curY, COMMAND_WINDOW_X_END - 1, userInput_curY + 3);
                 setCoord(userInput_curX, userInput_curY);
@@ -118,7 +130,8 @@ int main()
             //get the user input - brightness
             setCoord(userInput_curX, userInput_curY);
             char ch2;
-            while(scanf("%d", &userInput_brght) != 1 || userInput_brght > 1 || userInput_brght < 0) {
+            while(scanf("%d", &userInput_brght) != 1 || userInput_brght > 1 || userInput_brght < 0)
+            {
                 while((ch2 = getchar()) != '\n') continue; //read only first symbol
                 clearWorkspace(userInput_curX, userInput_curY, COMMAND_WINDOW_X_END - 1, userInput_curY + 3);
                 setCoord(userInput_curX, userInput_curY);
@@ -128,7 +141,8 @@ int main()
             drawAboutMenu();
         }
         //change color for one lamp
-        else if (tolower(userInput_function) == '5')  {
+        else if (tolower(userInput_function) == '5')
+        {
             int userInput_color;
             drawAboutMenu_ChangeColorAll();
             prStr_CrdClr(userInput_curX, userInput_curY, STANDART_COLOR, "Switching color - one lamp");
@@ -138,7 +152,8 @@ int main()
             //get the user input - brightness
             setCoord(userInput_curX, userInput_curY);
             char ch;
-            while(scanf("%d", &userInput_color) != 1 || userInput_color > 4 || userInput_color < 0) {
+            while(scanf("%d", &userInput_color) != 1 || userInput_color > 4 || userInput_color < 0)
+            {
                 while((ch = getchar()) != '\n') continue; //read only first symbol
                 clearWorkspace(userInput_curX, userInput_curY, COMMAND_WINDOW_X_END - 1, userInput_curY + 3);
                 setCoord(userInput_curX, userInput_curY);
@@ -147,15 +162,72 @@ int main()
             lampList_changeColorAll(&lampList, userInput_color);
             drawAboutMenu();
         }
-        //New year mode
-         else if (tolower(userInput_function) == '6')  {
+        //New year mode :3
+        else if (tolower(userInput_function) == '6')
+        {
+            int SleepTime = 0;
+            drawAboutMenu_Modes();
+            setCoord(userInput_curX, userInput_curY);
+            scanf("%i", &SleepTime);
+            if(SleepTime == 1)
+            {
+                while(1)
+                {
+                    if(kbhit())
+                    {
+                        if(getch() == 27)
+                        {
+                            break;
+                        }
+                    }
+                    ModeStep1(&lampList);
+                    drawLampList(&lampList);
+                    Sleep(100);
+                    ModeStep2(&lampList);
+                    drawLampList(&lampList);
+                    Sleep(100);
+                    ModeStep3(&lampList);
+                    drawLampList(&lampList);
+                    Sleep(100);
+                    ModeStep4(&lampList);
+                    drawLampList(&lampList);
+                    Sleep(100);
+                    prStr_CrdClr(userInput_curX, userInput_curY, STANDART_COLOR,"Press ESC to stop this stuff");
+                }
+            }
+            else if(SleepTime == 2){
+                while(1)
+                {
+                    if(kbhit())
+                    {
+                        if(getch() == 27)
+                        {
+                            break;
+                        }
+                    }
+                    ModeStep1(&lampList);
+                    drawLampList(&lampList);
+                    Sleep(10);
+                    ModeStep2(&lampList);
+                    drawLampList(&lampList);
+                    Sleep(10);
+                    ModeStep3(&lampList);
+                    drawLampList(&lampList);
+                    Sleep(10);
+                    ModeStep4(&lampList);
+                    drawLampList(&lampList);
+                    Sleep(10);
+                    prStr_CrdClr(userInput_curX, userInput_curY, STANDART_COLOR,"Press ESC to stop this stuff");
+                }
+            }
             prStr_CrdClr(userInput_curX, userInput_curY, STANDART_COLOR, "Enabling New Year mode...");
             userInput_curY++;
             prStr_CrdClr(userInput_curX, userInput_curY, STANDART_COLOR, "Done by BorzychV & LemeshkoB");
             userInput_curY++;
         }
         //wrong input
-        else {
+        else
+        {
             prStr_CrdClr(userInput_curX, userInput_curY, STANDART_COLOR, "Wrong input. Look at the list below.");
             userInput_curY++;
         }

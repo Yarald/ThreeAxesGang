@@ -78,5 +78,8 @@ void lampList_changeBrightnessOne(LampList_T * lamp_list, int id_brightness, int
 void lampList_changeColorAll(LampList_T * lamp_list, int self_color);
 void lampList_changeColorOne(LampList_T * lamp_list, int id, int self_color);
 
-//Some cool stuff here! :3
-void lampList_newYearMode(LampList_T * lamp_list);
+//Some cool stuff here!
+void drawAboutMenu_Modes();
+void ModeStep1(LampList_T * lamp_list);
+void ModeStep2(LampList_T * lamp_list);
+void ModeStep3(LampList_T * lamp_list);

@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <windows.h>
+#include <time.h>
 #include "emulator.h"
 
 //Set cursor position on (x,y) coordinate.
@@ -32,7 +34,8 @@ void drawBorders(int xStart, int yStart, int xEnd, int yEnd)
 }
 
 //Draw all borders on the console
-void drawAllBorders() {
+void drawAllBorders()
+{
     //Print DUSO
     prStr_CrdClr(CONSOLE_WIDTH / 2 - 2, CONSOLE_HEIGHT -1, STANDART_COLOR, "DUSO");
     //Print all borders
@@ -64,8 +67,10 @@ void prInt_CrdClr(int x, int y, int color, int number)
 void clearWorkspace(int x1, int y1, int x2, int y2)
 {
     int i, j;
-    for(i = x1; i<x2; i++) {
-        for(j = y1; j< y2; j++) {
+    for(i = x1; i<x2; i++)
+    {
+        for(j = y1; j< y2; j++)
+        {
             prStr_CrdClr(i,j, STANDART_COLOR, " ");
         }
     }
@@ -76,7 +81,8 @@ void clearWorkspace(int x1, int y1, int x2, int y2)
 void drawLamp(int x, int y, Lamp_T self)
 {
     int i,j;
-    if(self.state == OFF) {
+    if(self.state == OFF)
+    {
         for (i = y; i < y+3; i++)
         {
             for (j = x; j < x+3; j++)
@@ -89,9 +95,12 @@ void drawLamp(int x, int y, Lamp_T self)
         prStr_CrdClr(x+1, y+3, NOCOLOR, " ");
         prStr_CrdClr(x+3, y+1, NOCOLOR, " ");
     }
-    else if(self.state == ON) {
-        for (i = y; i < y+3; i++) {
-            for (j = x; j < x+3; j++) {
+    else if(self.state == ON)
+    {
+        for (i = y; i < y+3; i++)
+        {
+            for (j = x; j < x+3; j++)
+            {
                 prStr_CrdClr(j, i, self.color - DARK * (1 - self.brght), " ");
             }
         }
@@ -100,7 +109,8 @@ void drawLamp(int x, int y, Lamp_T self)
         prStr_CrdClr(x+1, y+3, self.color - DARK * (1 - self.brght), " ");
         prStr_CrdClr(x+3, y+1, self.color - DARK * (1 - self.brght), " ");
     }
-    else {
+    else
+    {
         printf("FATAL ERROR");
         exit(1);
     }
@@ -112,27 +122,31 @@ void drawLampList(LampList_T * lamp_list)
     int x = DRAW_ALL_LAMPS_START_POS_X, y = DRAW_ALL_LAMPS_START_POS_Y;
     int i;
     //Draw 1-4 lamps
-    for(i = 0; i < LAMPS_MAX_COUNT / 2; i++) {
+    for(i = 0; i < LAMPS_MAX_COUNT / 2; i++)
+    {
         drawLamp(x, y, lamp_list->list[i]);
         x += 7;
     }
     //Draw 5-8 lamps
     x = DRAW_ALL_LAMPS_START_POS_X, y = DRAW_ALL_LAMPS_START_POS_Y;
     y += 8;
-    for(i = 0; i < LAMPS_MAX_COUNT / 2; i++) {
+    for(i = 0; i < LAMPS_MAX_COUNT / 2; i++)
+    {
         drawLamp(x, y, lamp_list->list[i + 4]);
         x += 7;
     }
     //Draw 1-4 id`s
     x = DRAW_ALL_LAMPS_START_POS_X + 1, y = DRAW_ALL_LAMPS_START_POS_Y + 4;
-    for(i = 0; i<LAMPS_MAX_COUNT / 2; i++) {
+    for(i = 0; i<LAMPS_MAX_COUNT / 2; i++)
+    {
         prInt_CrdClr(x, y, ID_COLOR, lamp_list->list[i].id);
         x+= 7;
     }
     //Draw 5-8 id`s
     x = DRAW_ALL_LAMPS_START_POS_X + 1, y = DRAW_ALL_LAMPS_START_POS_Y + 4;
     y += 8;
-    for(i = 0; i<LAMPS_MAX_COUNT / 2; i++) {
+    for(i = 0; i<LAMPS_MAX_COUNT / 2; i++)
+    {
         prInt_CrdClr(x, y, ID_COLOR, lamp_list->list[i+4].id);
         x+= 7;
     }
@@ -155,7 +169,7 @@ void drawAboutMenu()
     setCoord(USER_INPUT_X, COMMAND_WINDOW_Y_END + 6);
     printf("\"5\"-switch color for all lamps.");
     setCoord(USER_INPUT_X, COMMAND_WINDOW_Y_END + 7);
-    printf("\"6\"-NEW YEAR mode.");
+    printf("\"6\"-Start Mode.");
     setCoord(USER_INPUT_X,USER_INPUT_Y);
 }
 
@@ -214,6 +228,18 @@ void drawAboutMenu_ChangeColorAll()
     setCoord(USER_INPUT_X,USER_INPUT_Y);
 }
 
+void drawAboutMenu_Modes()
+{
+    clearWorkspace(USER_INPUT_X, COMMAND_WINDOW_Y_END + 1, COMMAND_WINDOW_X_END - 1, CONSOLE_HEIGHT - 2);
+    setCoord(USER_INPUT_X, COMMAND_WINDOW_Y_END + 2);
+    setColor(STANDART_COLOR);
+    printf("Which mode do u like to turn on?:");
+    setCoord(USER_INPUT_X, COMMAND_WINDOW_Y_END + 3);
+    printf("1 - NEW YEAR mode\n");
+    setCoord(USER_INPUT_X, COMMAND_WINDOW_Y_END + 4);
+    printf("2 - PARTY mode");
+    setCoord(USER_INPUT_X,USER_INPUT_Y);
+}
 //Initialize the lamp list with default numbers.
 void lampList_constructor(LampList_T * lamp_list)
 {
@@ -228,29 +254,36 @@ void lampList_constructor(LampList_T * lamp_list)
 }
 
 //Turn on all the lamps.
-void lampList_turnOnAll(LampList_T * lamp_list) {
+void lampList_turnOnAll(LampList_T * lamp_list)
+{
     int i;
-    for(i = 0; i < LAMPS_MAX_COUNT; i++) {
+    for(i = 0; i < LAMPS_MAX_COUNT; i++)
+    {
         lamp_list->list[i].state = ON;
     }
 }
 
 //Turn off all the lamps.
-void lampList_turnOffAll(LampList_T * lamp_list) {
+void lampList_turnOffAll(LampList_T * lamp_list)
+{
     int i;
-    for(i = 0; i < LAMPS_MAX_COUNT; i++) {
+    for(i = 0; i < LAMPS_MAX_COUNT; i++)
+    {
         lamp_list->list[i].state = OFF;
     }
 }
 
 //Turn on/off only the one lamp.
-void lampList_turnOnOffOne(LampList_T * lamp_list, int id) {
+void lampList_turnOnOffOne(LampList_T * lamp_list, int id)
+{
     if(id < 1 || id > LAMPS_MAX_COUNT)
         return;
-    if(lamp_list->list[id - 1].state == OFF) {
+    if(lamp_list->list[id - 1].state == OFF)
+    {
         lamp_list->list[id - 1].state = ON;
     }
-    else {
+    else
+    {
         lamp_list->list[id - 1].state = OFF;
     }
 }
@@ -258,7 +291,8 @@ void lampList_turnOnOffOne(LampList_T * lamp_list, int id) {
 //Change brightness for all lamps at one time.
 void lampList_changeBrightnessAll(LampList_T * lamp_list, int id_brightness)
 {
-    for (int i = 0; i < LAMPS_MAX_COUNT; i++){
+    for (int i = 0; i < LAMPS_MAX_COUNT; i++)
+    {
         lampList_changeBrightnessOne(lamp_list, id_brightness, i);
     }
 }
@@ -272,38 +306,82 @@ void lampList_changeBrightnessOne(LampList_T * lamp_list, int id_brightness, int
 
 void lampList_changeColorOne(LampList_T * lamp_list, int id, int self_color)
 {
-        if(id < 0 || id > LAMPS_MAX_COUNT)
-            return;
-        switch(self_color){
-            case 0:
-                lamp_list->list[id].color = WHITE;
-                break;
+    if(id < 0 || id > LAMPS_MAX_COUNT)
+        return;
+    switch(self_color)
+    {
+    case 0:
+        lamp_list->list[id].color = WHITE;
+        break;
 
-            case 1:
-                lamp_list->list[id].color = RED;
-                break;
+    case 1:
+        lamp_list->list[id].color = RED;
+        break;
 
-            case 2:
-                lamp_list->list[id].color = GREEN;
-                break;
+    case 2:
+        lamp_list->list[id].color = GREEN;
+        break;
 
-            case 3:
-                lamp_list->list[id].color = BLUE;
-                break;
+    case 3:
+        lamp_list->list[id].color = BLUE;
+        break;
 
-            default:
-                break;
-        }
+    default:
+        break;
+    }
 }
 
 void lampList_changeColorAll(LampList_T * lamp_list, int self_color)
 {
     for(int i = 0; i < LAMPS_MAX_COUNT; i++)
     {
-            lampList_changeColorOne(lamp_list, i, self_color);
+        lampList_changeColorOne(lamp_list, i, self_color);
     }
 }
 
-void New_Year(){
+void  ModeStep1(LampList_T * lamp_list)
+{
+    lamp_list->list[0].color = BLUE;
+    lamp_list->list[1].color = RED;
+    lamp_list->list[2].color = GREEN;
+    lamp_list->list[3].color = RED;
+    lamp_list->list[4].color = GREEN;
+    lamp_list->list[5].color = BLUE;
+    lamp_list->list[6].color = RED;
+    lamp_list->list[7].color = GREEN;
 
+}
+void ModeStep2(LampList_T * lamp_list)
+{
+    lamp_list->list[0].color = GREEN;
+    lamp_list->list[1].color = BLUE;
+    lamp_list->list[2].color = RED;
+    lamp_list->list[3].color = GREEN;
+    lamp_list->list[4].color = RED;
+    lamp_list->list[5].color = GREEN;
+    lamp_list->list[6].color = BLUE;
+    lamp_list->list[7].color = RED;
+}
+
+void ModeStep3(LampList_T * lamp_list)
+{
+    lamp_list->list[0].color = RED;
+    lamp_list->list[1].color = GREEN;
+    lamp_list->list[2].color = BLUE;
+    lamp_list->list[3].color = RED;
+    lamp_list->list[4].color = GREEN;
+    lamp_list->list[5].color = RED;
+    lamp_list->list[6].color = GREEN;
+    lamp_list->list[7].color = BLUE;
+}
+void ModeStep4(LampList_T * lamp_list)
+{
+    lamp_list->list[0].color = BLUE;
+    lamp_list->list[1].color = RED;
+    lamp_list->list[2].color = GREEN;
+    lamp_list->list[3].color = BLUE;
+    lamp_list->list[4].color = RED;
+    lamp_list->list[5].color = GREEN;
+    lamp_list->list[6].color = RED;
+    lamp_list->list[7].color = GREEN;
 }
