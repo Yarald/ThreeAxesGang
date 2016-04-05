@@ -1,3 +1,5 @@
+#define step 10
+
 struct LAMP
 {
   int state;
@@ -38,8 +40,11 @@ void loop()
         removeBrightness();
         break;
       case 'q':
+      case 'a':
       case 'w':
+      case 's':
       case 'e':
+      case 'd':
         changeColor(incomingByte);
         break;
     }
@@ -51,28 +56,78 @@ void turnOnOffLamp(){
 }
 
 void addBrightness(){
-  if(LAMP1.brightnessR > 205 || LAMP1.brightnessG > 205 || LAMP1.brightnessB > 205)
+  if(LAMP1.brightnessR > 235 || LAMP1.brightnessG > 235 || LAMP1.brightnessB > 235)
     return;
-  LAMP1.brightnessR += 50;
-  LAMP1.brightnessG += 50;
-  LAMP1.brightnessB += 50;
+  LAMP1.brightnessR += step;
+  LAMP1.brightnessG += step;
+  LAMP1.brightnessB += step;
 }
 
-void changeColor(char ch
+//q - red
+//w - green
+//e - blue
+void changeColor(char incomingByte)
+{
+  if(incomingByte == 'q' || incomingByte == 'a')
+  {
+    if(incomingByte == 'q') {
+      if(LAMP1.brightnessR < 25) {
+        return;
+      }
+      LAMP1.brightnessR -= step;
+    }
+    else if (incomingByte == 'a') {
+      if(LAMP1.brightnessR > 235) {
+        return;
+      }
+      LAMP1.brightnessR += step;
+    }
+  }
+  if(incomingByte == 'w' || incomingByte == 's')
+  {
+    if(incomingByte == 'w') {
+      if(LAMP1.brightnessG < 25) {
+        return;
+      }
+      LAMP1.brightnessG -= step;
+    }
+    else if (incomingByte == 's') {
+      if(LAMP1.brightnessG > 235) {
+        return;
+      }
+      LAMP1.brightnessG += step;
+    }
+  }
+  if(incomingByte == 'e' || incomingByte == 'd')
+  {
+    if(incomingByte == 'e') {
+      if(LAMP1.brightnessB < 25) {
+        return;
+      }
+      LAMP1.brightnessB -= step;
+    }
+    else if (incomingByte == 'd') {
+      if(LAMP1.brightnessB > 235) {
+        return;
+      }
+      LAMP1.brightnessB += step;
+    }
+  }
+}
 
 void removeBrightness() {
-  if(LAMP1.brightnessR < 55 || LAMP1.brightnessG < 55 || LAMP1.brightnessB < 55)
+  if(LAMP1.brightnessR < 25 || LAMP1.brightnessG < 25 || LAMP1.brightnessB < 25)
     return;
-  LAMP1.brightnessR -= 50;
-  LAMP1.brightnessG -= 50;
-  LAMP1.brightnessB -= 50;
+  LAMP1.brightnessR -= step;
+  LAMP1.brightnessG -= step;
+  LAMP1.brightnessB -= step;
 }
 
 void updateLamp() {
   if(LAMP1.state == 1) {
-    analogWrite(LAMP1.pinB, LAMP1.brightness);
-    analogWrite(LAMP1.pinG, LAMP1.brightness);
-    analogWrite(LAMP1.pinR, LAMP1.brightness);
+    analogWrite(LAMP1.pinB, LAMP1.brightnessB);
+    analogWrite(LAMP1.pinG, LAMP1.brightnessG);
+    analogWrite(LAMP1.pinR, LAMP1.brightnessR);
   }
   else {
     analogWrite(LAMP1.pinB, LOW);
