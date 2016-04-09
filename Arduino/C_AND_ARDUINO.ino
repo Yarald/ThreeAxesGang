@@ -1,6 +1,5 @@
 #define step 10
-#define max 235
-#define min 25
+
 struct LAMP
 {
   int state;
@@ -22,7 +21,7 @@ void setup()
   pinMode(LAMP1.pinG, OUTPUT);
   pinMode(LAMP1.pinR, OUTPUT);
 }
-
+ 
 void loop()
 {
   if(Serial.available() > 0)
@@ -57,7 +56,7 @@ void turnOnOffLamp(){
 }
 
 void addBrightness(){
-  if(LAMP1.brightnessR > max || LAMP1.brightnessG > max || LAMP1.brightnessB > max)
+  if(LAMP1.brightnessR > 235 || LAMP1.brightnessG > 235 || LAMP1.brightnessB > 235)
     return;
   LAMP1.brightnessR += step;
   LAMP1.brightnessG += step;
@@ -72,13 +71,13 @@ void changeColor(char incomingByte)
   if(incomingByte == 'q' || incomingByte == 'a')
   {
     if(incomingByte == 'q') {
-      if(LAMP1.brightnessR < min) {
+      if(LAMP1.brightnessR < 25) {
         return;
       }
       LAMP1.brightnessR -= step;
     }
     else if (incomingByte == 'a') {
-      if(LAMP1.brightnessR > max) {
+      if(LAMP1.brightnessR > 235) {
         return;
       }
       LAMP1.brightnessR += step;
@@ -87,13 +86,13 @@ void changeColor(char incomingByte)
   if(incomingByte == 'w' || incomingByte == 's')
   {
     if(incomingByte == 'w') {
-      if(LAMP1.brightnessG < min) {
+      if(LAMP1.brightnessG < 25) {
         return;
       }
       LAMP1.brightnessG -= step;
     }
     else if (incomingByte == 's') {
-      if(LAMP1.brightnessG > max) {
+      if(LAMP1.brightnessG > 235) {
         return;
       }
       LAMP1.brightnessG += step;
@@ -102,13 +101,13 @@ void changeColor(char incomingByte)
   if(incomingByte == 'e' || incomingByte == 'd')
   {
     if(incomingByte == 'e') {
-      if(LAMP1.brightnessB < min) {
+      if(LAMP1.brightnessB < 25) {
         return;
       }
       LAMP1.brightnessB -= step;
     }
     else if (incomingByte == 'd') {
-      if(LAMP1.brightnessB > max) {
+      if(LAMP1.brightnessB > 235) {
         return;
       }
       LAMP1.brightnessB += step;
@@ -117,7 +116,7 @@ void changeColor(char incomingByte)
 }
 
 void removeBrightness() {
-  if(LAMP1.brightnessR < min || LAMP1.brightnessG < min || LAMP1.brightnessB < min)
+  if(LAMP1.brightnessR < 25 || LAMP1.brightnessG < 25 || LAMP1.brightnessB < 25)
     return;
   LAMP1.brightnessR -= step;
   LAMP1.brightnessG -= step;
