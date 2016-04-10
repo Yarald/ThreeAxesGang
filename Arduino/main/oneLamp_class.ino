@@ -21,17 +21,15 @@ class Lamp
     int pinG;
     int pinB;
     int state = 0;
-    int brightness_R = 5;
-    int brightness_G = 5;
-    int brightness_B = 5;
+    int brightness_R = BRGHT_MAX;
+    int brightness_G = BRGHT_MIN;
+    int brightness_B = BRGHT_MIN;
 };
 
 Lamp *lamp1;
-int color;
 
 void setup()
 {
-  color = 0;
   lamp1 = new Lamp(11, 10, 9);
   lamp1->lampConfigure_OUTPUT();
   Serial.begin(9600);
@@ -43,7 +41,6 @@ void loop()
   if (Serial.available() > 0)
   {
     incomingByte = Serial.read();
-    Serial.println(incomingByte);
     switch (incomingByte)
     {
       case '1':
@@ -162,4 +159,3 @@ void changeColor(int color, Lamp *lamp)
   lamp->brightness_G = greenIntensity;
   lamp->brightness_B = blueIntensity;
 }
-
