@@ -21,6 +21,7 @@ class Lamp
     int pinG;
     int pinB;
     int state = 0;
+    int curColor = 0; //0-red 1-green 2-blue
     int brightness_R = BRGHT_MAX;
     int brightness_G = BRGHT_MIN;
     int brightness_B = BRGHT_MIN;
@@ -46,26 +47,17 @@ void loop()
       case '1':
         switchLamp(lamp1);
         break;
-      case 'q':
-        addRed(lamp1);
+      case '+':
+        addBrightness(lamp1);
         break;
-      case 'w':
-        addGreen(lamp1);
+      case '-':
+        removeBrightness(lamp1);
+        break;
+      case 'q':
+        changeColor(lamp1);
         break;
       case 'e':
-        addBlue(lamp1);
-        break;
-      case 'a':
-        removeRed(lamp1);
-        break;
-      case 's':
-        removeGreen(lamp1);
-        break;
-      case 'd':
-        removeBlue(lamp1);
-        break;
-      case 'r':
-        changeColor(color, lamp1);
+        showSpectrum(lamp1);
         break;
     }
   }
@@ -76,86 +68,128 @@ void switchLamp(Lamp *lamp) {
   lamp->state = (lamp->state == 1) ? 0 : 1;
 }
 
-void addRed(Lamp *lamp) {
-  lamp->brightness_G = LOW;
-  lamp->brightness_B = LOW;
-  if (lamp->brightness_R >= BRGHT_MAX)
-    return;
-  lamp->brightness_R += BRGHT_STEP;
+void addBrightness(Lamp *lamp) {
+  switch (lamp->curColor)
+  {
+    // red
+    case 0 :
+      if (lamp->brightness_R >= BRGHT_MAX) {
+        break;
+      }
+      lamp->brightness_R += BRGHT_STEP;
+      break;
+    // green
+    case 1:
+      if (lamp->brightness_G >= BRGHT_MAX) {
+        break;
+      }
+      lamp->brightness_G += BRGHT_STEP;
+      break;
+    // blue
+    case 2:
+      if (lamp->brightness_B >= BRGHT_MAX) {
+        break;
+      }
+      lamp->brightness_B += BRGHT_STEP;
+      break;
+  }
 }
 
-void addGreen(Lamp *lamp) {
-  if (lamp->brightness_G >= BRGHT_MAX)
-    return;
-  lamp->brightness_G += BRGHT_STEP;
+void removeBrightness(Lamp *lamp) {
+  switch (lamp->curColor)
+  {
+    // red
+    case 0 :
+      if (lamp->brightness_R <= BRGHT_MIN) {
+        break;
+      }
+      lamp->brightness_R -= BRGHT_STEP;
+      break;
+    // green
+    case 1:
+      if (lamp->brightness_G <= BRGHT_MIN) {
+        break;
+      }
+      lamp->brightness_G -= BRGHT_STEP;
+      break;
+    // blue
+    case 2:
+      if (lamp->brightness_B <= BRGHT_MIN) {
+        break;
+      }
+      lamp->brightness_B -= BRGHT_STEP;
+      break;
+  }
 }
 
-void addBlue(Lamp *lamp) {
-  if (lamp->brightness_B >= BRGHT_MAX)
-    return;
-  lamp->brightness_B += BRGHT_STEP;
+void changeColor(Lamp *lamp)
+{
+  switch (lamp->curColor)
+  {
+    case 0:
+      lamp->curColor = 1;
+      lamp->brightness_G = lamp->brightness_R;
+      lamp->brightness_R = BRGHT_MIN;
+      break;
+    case 1:
+      lamp->curColor = 2;
+      lamp->brightness_B = lamp->brightness_G;
+      lamp->brightness_G = BRGHT_MIN;
+      break;
+    case 2:
+      lamp->curColor = 0;
+      lamp->brightness_R = lamp->brightness_B;
+      lamp->brightness_B = BRGHT_MIN;
+      break;
+  }
 }
 
-void removeRed(Lamp *lamp) {
-  if (lamp->brightness_R <= BRGHT_MIN)
-    return;
-  lamp->brightness_R -= BRGHT_STEP;
+void showSpectrum(Lamp *lamp)
+{
+  int x;
+  for (x = 0; x < 768; x++)
+  {
+    showRGB(lamp, x);
+    delay(10);
+  }  
+  lamp->brightness_R = BRGHT_MAX;
+  lamp->brightness_G = BRGHT_MIN;
+  lamp->brightness_B = BRGHT_MIN;
 }
 
-void removeGreen(Lamp *lamp) {
-  if (lamp->brightness_G <= BRGHT_MIN)
-    return;
-  lamp->brightness_G -= BRGHT_STEP;
-}
-
-void removeBlue(Lamp *lamp) {
-  if (lamp->brightness_B <= BRGHT_MIN)
-    return;
-  lamp->brightness_B -= BRGHT_STEP;
+void showRGB(Lamp *lamp, int color)
+{
+  if (color <= 255)
+  {
+    lamp->brightness_R = 255 - color;
+    lamp->brightness_G = color;
+    lamp->brightness_B = 0;
+  }
+  else if (color <= 511)
+  {
+    lamp->brightness_R = 0;
+    lamp->brightness_G = 255 - (color - 256);
+    lamp->brightness_B = (color - 256);
+  }
+  else // color >= 512
+  {
+    lamp->brightness_R = (color - 512);
+    lamp->brightness_G = 0;
+    lamp->brightness_B = 255 - (color - 512);
+  }
+  updateLamp(lamp);
 }
 
 void updateLamp(Lamp *lamp) {
   if (lamp->state == 1) {
-    analogWrite(lamp->pinB, lamp->brightness_B);
-    analogWrite(lamp->pinG, lamp->brightness_G);
     analogWrite(lamp->pinR, lamp->brightness_R);
+    analogWrite(lamp->pinG, lamp->brightness_G);
+    analogWrite(lamp->pinB, lamp->brightness_B);
   }
   else {
-    analogWrite(lamp->pinB, 0);
-    analogWrite(lamp->pinG, 0);
-    analogWrite(lamp->pinR, 0);
+    analogWrite(lamp->pinB, LOW);
+    analogWrite(lamp->pinG, LOW);
+    analogWrite(lamp->pinR, LOW);
   }
 }
 
-void changeColor(int color, Lamp *lamp)
-{
-  if (color == 760) {
-    color = 0;
-  }
-  color += 10;
-  delay(10);
-  int redIntensity;
-  int greenIntensity;
-  int blueIntensity;
-  if (color <= 255)
-  {
-    redIntensity = 255 - color;
-    greenIntensity = color;
-    blueIntensity = 0;
-  }
-  else if (color <= 511)
-  {
-    redIntensity = 0;
-    greenIntensity = 255 - (color - 256);
-    blueIntensity = (color - 256);
-  }
-  else
-  {
-    redIntensity = (color - 512);
-    greenIntensity = 0;
-    blueIntensity = 255 - (color - 512);
-  }
-  lamp->brightness_R = redIntensity;
-  lamp->brightness_G = greenIntensity;
-  lamp->brightness_B = blueIntensity;
-}
