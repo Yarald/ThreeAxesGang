@@ -1,4 +1,7 @@
 #define LAMPS_MAX_COUNT 2
+#define BRGHT_MIN 5
+#define BRGHT_MAX 255
+#define BRGHT_STEP 50
 
 /*
    Defines for shiftOut method
@@ -9,9 +12,10 @@
 /*
    Fields for shiftRegister #1.
 */
-const int datapin = 2;
-const int clockpin = 3;
-const int latchpin = 4;
+const int latchpin = 6;
+const int datapin = 4;
+const int clockpin = 5;
+const int brightnessPin = 3;
 
 /*
    Class to describe lamp structure.
@@ -41,6 +45,8 @@ Lamp *lampSet[LAMPS_MAX_COUNT] = {
   //new Lamp(6, 7, 8);
 };
 
+byte curBrightness = BRGHT_MAX;
+
 /*
    Byte to write into shift register.
    This byte also holds information what lamps are turned on/off.
@@ -54,6 +60,7 @@ byte data = 0;
 void setup()
 {
   initShiftRegister();
+  pinMode(brightnessPin, OUTPUT);
   Serial.begin(9600);
 }
 
@@ -74,9 +81,12 @@ void loop()
     case 'w':
       changeColor(incomingByte, lampSet);
       break;
+    case '-':
+    case '+':
+      changeBrightness(incomingByte);
+      break;
   }
   updateLamps(lampSet);
-  printBits(data);
 }
 
 /*
@@ -86,6 +96,22 @@ void loop()
 void switchLamp(Lamp *lamp)
 {
   lamp->state = (lamp->state == ON) ? OFF : ON;
+}
+
+void changeBrightness(char incChar)
+{
+  if (incChar == '-')
+  {
+    if (curBrightness == BRGHT_MIN)
+      return;
+    curBrightness -=  BRGHT_STEP;
+  }
+  else
+  {
+    if (curBrightness == BRGHT_MAX)
+      return;
+    curBrightness += BRGHT_STEP;
+  }
 }
 
 void changeColor(char incChar, Lamp *lampSet[])
@@ -149,6 +175,8 @@ void updateLamps(Lamp *lampSet[])
       digitalWrite(latchpin, LOW);
     }
   }
+  setBrightness(curBrightness);
+  printBits(data);
 }
 
 void initShiftRegister()
@@ -166,5 +194,10 @@ void printBits(byte myByte) {
       Serial.print('0');
   }
   Serial.println();
+}
+
+void setBrightness(byte brightness)
+{
+  analogWrite(brightnessPin, 255 - brightness);
 }
 
