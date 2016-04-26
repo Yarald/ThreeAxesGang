@@ -177,9 +177,30 @@ void loop()
       }
       break;
     case 'z':
-      for(int i = 0; i < 3; i++)
-      {
-        pingPong(); 
+      while (1) {
+        char modeByte = Serial.read();
+        if (modeByte == 'z') {
+       		for (int i = 0; i < 3; i++) {
+        		pingPong();
+      		}
+      		break;
+        }
+        else if (modeByte == 'x') {
+        	for (int i = 0; i < 10; i++) {
+            	newYear();
+          	}
+          	break;
+        }
+        else if (modeByte == 'c') {
+        	for (int i = 0; i < 2; i++) {
+            	chaser();
+            	delay(1000);
+            }
+            break;
+        }
+        else {
+        	continue;
+        }
       }
       break;
   }
@@ -512,5 +533,92 @@ void pingPong()
     shiftOut(DATAPIN, CLOCKPIN, MSBFIRST, redSR[7 - i]);
     digitalWrite(LATCHPIN, HIGH);
     delay(50);
+  }
+}
+
+//TESTING FUNCTION TO SEE BYTES IN SHIFT REGISTER! (e.g. printBytes(allSR[j]))
+void printBytes(int byte[8]) {
+  for (int i = 0; i < 8; i++) {
+    Serial.print(byte[i]);
+    Serial.print(" ");
+  }
+  Serial.println("");
+}
+
+//NEW YEAR animation func
+void newYear() {
+  int allSR[3][8] = {
+    { 0,0,0,0,0,0,0,0 },
+    { 0,0,0,0,0,0,0,0 },
+    { 0,0,0,0,0,0,0,0 } 
+  };
+  int rgb;
+
+  for (int i = 0; i < 3; i++) {
+    rgb = i;
+    for (int j = 0; j < 3; j++) {
+      for (int k = 0; k < 8; k++) {
+        if ((j * 8 + k) % 3 == rgb && ((j * 8 + k) / 3 + i) % 3 == rgb) {
+          allSR[j][k] = pow(2, k);
+          if(k >= 2){
+          	allSR[j][k]+=1;
+          }
+          rgb++;
+          rgb = rgb % 3;
+        }
+        else {
+          allSR[j][k] = 0;
+        }
+      }
+    }
+    digitalWrite(LATCHPIN, LOW);
+    shiftOut(DATAPIN, CLOCKPIN, MSBFIRST, srDataSum(allSR[2]));
+    shiftOut(DATAPIN, CLOCKPIN, MSBFIRST, srDataSum(allSR[1]));
+    shiftOut(DATAPIN, CLOCKPIN, MSBFIRST, srDataSum(allSR[0]));
+    digitalWrite(LATCHPIN, HIGH);
+    delay(100);
+  }
+}
+
+//CHASER animation func
+void chaser() {
+  int allSR[3][8] = {
+    { 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0, 0 },
+    { 0, 0, 0, 0, 0, 0, 0, 0 }
+  };
+  int k;
+  
+  for (int i = 0; i < 3; i++) {
+  	k = i;
+  	for (int j = 0; j < 3; j++) {
+		for (; k < 8; k += 3) {
+		  	allSR[j][k] = pow(2, k);
+		  	if (k >= 2) {
+		    	allSR[j][k]+=1;
+		  	}
+		    digitalWrite(LATCHPIN, LOW);
+		    shiftOut(DATAPIN, CLOCKPIN, MSBFIRST, srDataSum(allSR[2]));
+		    shiftOut(DATAPIN, CLOCKPIN, MSBFIRST, srDataSum(allSR[1]));
+		    shiftOut(DATAPIN, CLOCKPIN, MSBFIRST, srDataSum(allSR[0]));
+		    digitalWrite(LATCHPIN, HIGH);
+		    delay(50);
+    	}
+    k = k % 8;
+    }
+    k = i;
+    for (int j = 0; j < 3; j++) {
+	    for (; k < 8; k += 3) {
+		    allSR[j][k] = 0;
+			digitalWrite(LATCHPIN, LOW);
+			shiftOut(DATAPIN, CLOCKPIN, MSBFIRST, srDataSum(allSR[2]));
+			shiftOut(DATAPIN, CLOCKPIN, MSBFIRST, srDataSum(allSR[1]));
+			shiftOut(DATAPIN, CLOCKPIN, MSBFIRST, srDataSum(allSR[0]));
+			digitalWrite(LATCHPIN, HIGH);
+			delay(50);
+	    }
+    k = k % 8;
+  	}
+  	delay(300);
   }
 }
