@@ -1,8 +1,7 @@
-3 step - with 2 shift registers and 8 lamps
+Qt program for DUSO application.
 
-switching on/off 1 lamp - '1'-'8'
-switching on/off all lamps - 's'
-changing color for 1 lamp - 'q''w''e''r''t''y''u''i'
-changing color for 2 lamp - 'a'
-changing brightness for all lamps: '-' '+'
-ping-pong animation - 'z'
+What you can do:
+1. Turn on/off all lamps
+2. Change color for each or for all lamps.
+3. Change brightness for all lamps.
+4. 4 (FOUR!) amazing animations.
