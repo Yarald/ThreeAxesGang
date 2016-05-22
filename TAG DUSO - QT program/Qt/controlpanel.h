@@ -17,7 +17,7 @@ class ControlPanel : public QMainWindow
 public:
     explicit ControlPanel(QWidget *parent = 0);
     QSerialPort serial;
-    const char *COM = "COM7";
+    const char *COM = "COM4";
     ~ControlPanel();
 
 private slots:

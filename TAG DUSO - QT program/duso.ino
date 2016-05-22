@@ -110,6 +110,8 @@ Lamp *lampSet[LAMPS_MAX_COUNT] = {
 
 byte curBrightness = BRGHT_MAX;
 
+char incomingByte = 0;
+
 /*
    Current lamps state.
 */
@@ -128,88 +130,111 @@ void setup()
 
 void loop()
 {
-  char incomingByte = Serial.read();
-  switch (incomingByte)
+  if (Serial.available() > 0)
   {
-    case '1':
-    case '2':
-    case '3':
-    case '4':
-    case '5':
-    case '6':
-    case '7':
-    case '8':
-      lamp_switchLamp(lampSet[(incomingByte - '0') - 1]);
-      break;
-    case 'q':
-      lamp_changeColor(lampSet[0]);
-      break;
-    case 'w':
-      lamp_changeColor(lampSet[1]);
-      break;
-    case 'e':
-      lamp_changeColor(lampSet[2]);
-      break;
-    case 'r':
-      lamp_changeColor(lampSet[3]);
-      break;
-    case 't':
-      lamp_changeColor(lampSet[4]);
-      break;
-    case 'y':
-      lamp_changeColor(lampSet[5]);
-      break;
-    case 'u':
-      lamp_changeColor(lampSet[6]);
-      break;
-    case 'i':
-      lamp_changeColor(lampSet[7]);
-      break;
-    case '-':
-    case '+':
-      lamp_changeBrightness(incomingByte);
-      break;
-    case 'a':
-      for (int i = 0; i < LAMPS_MAX_COUNT; i++)
+    incomingByte = Serial.read();
+    if ((incomingByte >= '1') && (incomingByte <= '6'))
+    {
+      lamp_changeBrightness(incomingByte - '0');
+      Serial.print("Number received: ");
+      Serial.println(incomingByte);
+    }
+    else
+    {
+      switch (incomingByte)
       {
-        lamp_changeColor(lampSet[i]);
-      }
-      break;
-    case 's':
-      for (int i = 0; i < LAMPS_MAX_COUNT; i++)
-      {
-        lamp_switchLamp(lampSet[i]);
-      }
-      break;
-    case 'z':
-      while (1) {
-        char modeByte = Serial.read();
-        if (modeByte == 'z') {
-          for (int i = 0; i < 3; i++) {
-            pingPong();
+        case 'q':
+          lamp_switchLamp(lampSet[0]);
+          break;
+        case 'w':
+          lamp_switchLamp(lampSet[1]);
+          break;
+        case 'e':
+          lamp_switchLamp(lampSet[2]);
+          break;
+        case 'r':
+          lamp_switchLamp(lampSet[3]);
+          break;
+        case 't':
+          lamp_switchLamp(lampSet[4]);
+          break;
+        case 'y':
+          lamp_switchLamp(lampSet[5]);
+          break;
+        case 'u':
+          lamp_switchLamp(lampSet[6]);
+          break;
+        case 'i':
+          lamp_switchLamp(lampSet[7]);
+          break;
+        case 'a':
+          lamp_changeColor(lampSet[0]);
+          break;
+        case 's':
+          lamp_changeColor(lampSet[1]);
+          break;
+        case 'd':
+          lamp_changeColor(lampSet[2]);
+          break;
+        case 'f':
+          lamp_changeColor(lampSet[3]);
+          break;
+        case 'g':
+          lamp_changeColor(lampSet[4]);
+          break;
+        case 'h':
+          lamp_changeColor(lampSet[5]);
+          break;
+        case 'j':
+          lamp_changeColor(lampSet[6]);
+          break;
+        case 'k':
+          lamp_changeColor(lampSet[7]);
+          break;
+        case 'o':
+          for (int i = 0; i < LAMPS_MAX_COUNT; i++)
+          {
+            lamp_changeColor(lampSet[i]);
           }
           break;
-        }
-        else if (modeByte == 'x') {
-          for (int i = 0; i < 10; i++) {
-            newYear();
+        case 'p':
+          for (int i = 0; i < LAMPS_MAX_COUNT; i++)
+          {
+            lamp_switchLamp(lampSet[i]);
           }
           break;
-        }
-        else if (modeByte == 'c') {
-          for (int i = 0; i < 2; i++) {
-            chaser();
-            delay(1000);
+        case 'z':
+          while (1) {
+            char modeByte = Serial.read();
+            if (modeByte == 'z') {
+              for (int i = 0; i < 3; i++) {
+                pingPong();
+              }
+              break;
+            }
+            else if (modeByte == 'x') {
+              for (int i = 0; i < 10; i++) {
+                newYear();
+              }
+              break;
+            }
+            else if (modeByte == 'c') {
+              for (int i = 0; i < 2; i++) {
+                chaser();
+                delay(1000);
+              }
+              break;
+            }
+            else if (modeByte == 'v') {
+              sorcerer();
+              break;
+            }
           }
           break;
-        }
-        else if (modeByte == 'v') {
-          sorcerer();
-          break;
-        }
       }
-      break;
+    }
   }
+  // Update data in shift registers.
   lamp_updateLamps(srDataSum(srdata1),
                    srDataSum(srdata2),
                    srDataSum(srdata3)
@@ -353,20 +378,11 @@ void lamp_switchLamp(Lamp *curLamp)
   curLamp->state = (curLamp->state == ON) ? OFF : ON;
 }
 
-void lamp_changeBrightness(char incChar)
+void lamp_changeBrightness(int num)
 {
-  if (incChar == '-')
-  {
-    if (curBrightness == BRGHT_MIN)
-      return;
-    curBrightness -=  BRGHT_STEP;
-  }
-  else
-  {
-    if (curBrightness == BRGHT_MAX)
-      return;
-    curBrightness += BRGHT_STEP;
-  }
+    curBrightness = 5 + (num - 1) * 50;
+    Serial.print("Calculated: ");
+    Serial.println(curBrightness);
 }
 
 void lamp_changeColor(Lamp *curLamp)
@@ -380,25 +396,31 @@ void lamp_changeColor(Lamp *curLamp)
       curLamp->curColor = 1;
       switch (curLamp->shiftRegister)
       {
+        // If current color was blue.
         case 1:
           srdata1[curLamp->indexR] = 0;
           srdata1[curLamp->indexG] = curLamp->valueG;
+          srdata1[curLamp->indexB] = 0;
           break;
         case 2:
           srdata2[curLamp->indexR] = 0;
           srdata2[curLamp->indexG] = curLamp->valueG;
+          srdata2[curLamp->indexB] = 0;
           break;
         case 3:
           srdata3[curLamp->indexR] = 0;
           srdata3[curLamp->indexG] = curLamp->valueG;
+          srdata3[curLamp->indexB] = 0;
           break;
         case 4:
           srdata1[curLamp->indexR] = 0;
           srdata1[curLamp->indexG] = curLamp->valueG;
+          srdata2[curLamp->indexB] = 0;
           break;
         case 5:
           srdata2[curLamp->indexR] = 0;
           srdata3[curLamp->indexG] = curLamp->valueG;
+          srdata3[curLamp->indexB] = 0;
           break;
       }
       break;
@@ -408,22 +430,27 @@ void lamp_changeColor(Lamp *curLamp)
       switch (curLamp->shiftRegister)
       {
         case 1:
+          srdata1[curLamp->indexR] = 0;
           srdata1[curLamp->indexG] = 0;
           srdata1[curLamp->indexB] = curLamp->valueB;
           break;
         case 2:
+          srdata2[curLamp->indexR] = 0;
           srdata2[curLamp->indexG] = 0;
           srdata2[curLamp->indexB] = curLamp->valueB;
           break;
         case 3:
+          srdata3[curLamp->indexR] = 0;
           srdata3[curLamp->indexG] = 0;
           srdata3[curLamp->indexB] = curLamp->valueB;
           break;
         case 4:
+          srdata1[curLamp->indexR] = 0;
           srdata1[curLamp->indexG] = 0;
           srdata2[curLamp->indexB] = curLamp->valueB;
           break;
         case 5:
+          srdata2[curLamp->indexR] = 0;
           srdata3[curLamp->indexG] = 0;
           srdata3[curLamp->indexB] = curLamp->valueB;
           break;
@@ -435,22 +462,27 @@ void lamp_changeColor(Lamp *curLamp)
       switch (curLamp->shiftRegister)
       {
         case 1:
+          srdata1[curLamp->indexG] = 0;
           srdata1[curLamp->indexB] = 0;
           srdata1[curLamp->indexR] = curLamp->valueR;
           break;
         case 2:
+          srdata2[curLamp->indexG] = 0;
           srdata2[curLamp->indexB] = 0;
           srdata2[curLamp->indexR] = curLamp->valueR;
           break;
         case 3:
+          srdata3[curLamp->indexG] = 0;
           srdata3[curLamp->indexB] = 0;
           srdata3[curLamp->indexR] = curLamp->valueR;
           break;
         case 4:
+          srdata1[curLamp->indexG] = 0;
           srdata2[curLamp->indexB] = 0;
           srdata1[curLamp->indexR] = curLamp->valueR;
           break;
         case 5:
+          srdata3[curLamp->indexG] = 0;
           srdata3[curLamp->indexB] = 0;
           srdata2[curLamp->indexR] = curLamp->valueR;
           break;

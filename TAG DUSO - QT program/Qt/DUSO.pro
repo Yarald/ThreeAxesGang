@@ -18,3 +18,5 @@ SOURCES += main.cpp\
 HEADERS  += controlpanel.h
 
 FORMS    += controlpanel.ui
+
+DISTFILES +=
