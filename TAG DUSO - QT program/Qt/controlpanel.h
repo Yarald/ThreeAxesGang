@@ -39,18 +39,21 @@ private slots:
     void on_changeClrL6_clicked();
     void on_changeClrL7_clicked();
     void on_changeClrL8_clicked();
-    void on_changeBrght_Plus_clicked();
-    void on_changeBrght_Minus_clicked();
     void on_colorsAllButton_clicked();
     void on_switchAllButton_clicked();
     void on_pingPongButton_clicked();
     void on_newYearButton_clicked();
     void on_chaserButton_clicked();
     void on_sorcererButton_clicked();
+    void on_btght_slider_valueChanged(int value);
+    void on_submitTimer_button_clicked();
+    void on_flickeringButton_clicked();
 
 private:
     Ui::ControlPanel *ui;
+    QTimer *timer;
     QMediaPlayer *player;
+    void helper(int h, int m, int s, QString context);
 };
 
 #endif // CONTROLPANEL_H

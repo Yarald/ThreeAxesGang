@@ -3,7 +3,7 @@
 
 #include <QSerialPort>
 #include <QMediaPlayer>
-#include <QDebug>
+#include <QTimer>
 
 ControlPanel::ControlPanel(QWidget *parent) :
     QMainWindow(parent),
@@ -22,16 +22,20 @@ ControlPanel::ControlPanel(QWidget *parent) :
     serial.setFlowControl(QSerialPort::NoFlowControl);
     // Multimedia
     player = new QMediaPlayer(this);
+    // Timer
+    this->timer = new QTimer(this);
 }
 
 ControlPanel::~ControlPanel()
 {
-    delete ui;
+    serial.write("p*");
     serial.close();
+    delete ui;
 }
 
 void ControlPanel::on_systemOnButton_clicked()
 {
+    ui->statusLabel->setText(QString("Opening port to %1...").arg(this->COM));
     serial.open(QIODevice::ReadWrite);
     ui->statusLabel->setText(QString("Port opened to %1.").arg(this->COM));
 }
@@ -132,19 +136,6 @@ void ControlPanel::on_changeClrL8_clicked()
     ui->statusLabel->setText("Lamp 8 changed his color.");
 }
 
-void ControlPanel::on_changeBrght_Plus_clicked()
-{
-    serial.write("6*");
-    ui->statusLabel->setText("Brightness for all lamps increased.");
-}
-
-void ControlPanel::on_changeBrght_Minus_clicked()
-{
-    serial.write("1*");
-    ui->statusLabel->setText("Brightness for all lamps decreased.");
-}
-
-
 void ControlPanel::on_colorsAllButton_clicked()
 {
     serial.write("o*");
@@ -169,7 +160,6 @@ void ControlPanel::on_newYearButton_clicked()
     ui->statusLabel->setText("New year animation!");
 }
 
-
 void ControlPanel::on_chaserButton_clicked()
 {
     serial.write("zc*");
@@ -185,6 +175,142 @@ void ControlPanel::on_sorcererButton_clicked()
     ui->statusLabel->setText(player->errorString());
 
     temp.append("X-Ray Dog - Sorcerer (remix) animation!");
-    serial.write("zv*");
+    serial.write("zb*");
     ui->statusLabel->setText(temp);
+}
+
+void ControlPanel::on_flickeringButton_clicked()
+{
+    serial.write("zv*");
+    ui->statusLabel->setText("Flickering animation!");
+}
+
+void ControlPanel::on_btght_slider_valueChanged(int value)
+{
+    char myInt = '0' + value;
+    char toWrite[3] = {myInt, '*', '\n'};
+    serial.write(toWrite);
+    QString statusLabelText = QString("Brightness value level %1.").arg(QString::number(value));
+    this->ui->statusLabel->setText(statusLabelText);
+}
+
+void ControlPanel::helper(int h, int m, int s, QString context)
+{
+    this->ui->statusLabel->setText(QString("%1 on %2-%3-%4")
+                                   .arg(context)
+                                   .arg(QString::number(h))
+                                   .arg(QString::number(m))
+                                   .arg(QString::number(s))
+                                   );
+}
+
+void ControlPanel::on_submitTimer_button_clicked()
+{
+    int hours = this->ui->timer_timeEdit->time().hour();
+    int minutes = this->ui->timer_timeEdit->time().minute();
+    int seconds = this->ui->timer_timeEdit->time().second();
+
+    QString timerActionText = this->ui->timer_comboBox->currentText();
+    QTime now = QDateTime::currentDateTime().time();
+    QTime timeOfTheAction = QTime(hours, minutes, seconds);
+
+    if (timerActionText == "Close program")
+    {
+        timer->singleShot(now.secsTo(timeOfTheAction) * 1000, this, SLOT(close()));
+        helper(hours, minutes, seconds, "System will be closed");
+    }
+    else if (timerActionText == "Turn On 1")
+    {
+        timer->singleShot(now.secsTo(timeOfTheAction) * 1000, this, SLOT(on_switchL1_clicked()));
+        helper(hours, minutes, seconds, "First lamp will be switched");
+    }
+    else if (timerActionText == "Turn On 2")
+    {
+        timer->singleShot(now.secsTo(timeOfTheAction) * 1000, this, SLOT(on_switchL2_clicked()));
+        helper(hours, minutes, seconds, "Second lamp will be switched");
+    }
+    else if (timerActionText == "Turn On 3")
+    {
+        timer->singleShot(now.secsTo(timeOfTheAction) * 1000, this, SLOT(on_switchL3_clicked()));
+        helper(hours, minutes, seconds, "Third lamp will be switched");
+    }
+    else if (timerActionText == "Turn On 4")
+    {
+        timer->singleShot(now.secsTo(timeOfTheAction) * 1000, this, SLOT(on_switchL4_clicked()));
+        helper(hours, minutes, seconds, "Fourth lamp will be switched");
+    }
+    else if (timerActionText == "Turn On 5")
+    {
+        timer->singleShot(now.secsTo(timeOfTheAction) * 1000, this, SLOT(on_switchL5_clicked()));
+        helper(hours, minutes, seconds, "Fifth lamp will be switched");
+    }
+    else if (timerActionText == "Turn On 6")
+    {
+        timer->singleShot(now.secsTo(timeOfTheAction) * 1000, this, SLOT(on_switchL6_clicked()));
+        helper(hours, minutes, seconds, "Sixth lamp will be switched");
+    }
+    else if (timerActionText == "Turn On 7")
+    {
+        timer->singleShot(now.secsTo(timeOfTheAction) * 1000, this, SLOT(on_switchL7_clicked()));
+        helper(hours, minutes, seconds, "Seventh lamp will be switched");
+    }
+    else if (timerActionText == "Turn On 8")
+    {
+        timer->singleShot(now.secsTo(timeOfTheAction) * 1000, this, SLOT(on_switchL8_clicked()));
+        helper(hours, minutes, seconds, "Eigth lamp will be switched");
+    }
+    else if (timerActionText == "Change color 1")
+    {
+        timer->singleShot(now.secsTo(timeOfTheAction) * 1000, this, SLOT(on_changeClrL1_clicked()));
+        helper(hours, minutes, seconds, "First lamp will change color");
+    }
+    else if (timerActionText == "Change color 2")
+    {
+        timer->singleShot(now.secsTo(timeOfTheAction) * 1000, this, SLOT(on_changeClrL2_clicked()));
+        helper(hours, minutes, seconds, "Second lamp will change color");
+    }
+    else if (timerActionText == "Change color 3")
+    {
+        timer->singleShot(now.secsTo(timeOfTheAction) * 1000, this, SLOT(on_changeClrL3_clicked()));
+        helper(hours, minutes, seconds, "Third lamp will change color");
+    }
+    else if (timerActionText == "Change color 4")
+    {
+        timer->singleShot(now.secsTo(timeOfTheAction) * 1000, this, SLOT(on_changeClrL4_clicked()));
+        helper(hours, minutes, seconds, "Fourth lamp will change color");
+    }
+    else if (timerActionText == "Change color 5")
+    {
+        timer->singleShot(now.secsTo(timeOfTheAction) * 1000, this, SLOT(on_changeClrL5_clicked()));
+        helper(hours, minutes, seconds, "Fifth lamp will change color");
+    }
+    else if (timerActionText == "Change color 6")
+    {
+        timer->singleShot(now.secsTo(timeOfTheAction) * 1000, this, SLOT(on_changeClrL6_clicked()));
+        helper(hours, minutes, seconds, "Sixth lamp will change color");
+    }
+    else if (timerActionText == "Change color 7")
+    {
+        timer->singleShot(now.secsTo(timeOfTheAction) * 1000, this, SLOT(on_changeClrL7_clicked()));
+        helper(hours, minutes, seconds, "Seventh lamp will change color");
+    }
+    else if (timerActionText == "Change color 8")
+    {
+        timer->singleShot(now.secsTo(timeOfTheAction) * 1000, this, SLOT(on_changeClrL8_clicked()));
+        helper(hours, minutes, seconds, "Eigth lamp will change color");
+    }
+    else if (timerActionText == "Switch All")
+    {
+        timer->singleShot(now.secsTo(timeOfTheAction) * 1000, this, SLOT(on_switchAllButton_clicked()));
+        helper(hours, minutes, seconds, "All lamps will be switched");
+    }
+    else if (timerActionText == "Change color all")
+    {
+        timer->singleShot(now.secsTo(timeOfTheAction) * 1000, this, SLOT(on_colorsAllButton_clicked()));
+        helper(hours, minutes, seconds, "All lamps will change color");
+    }
+    else
+    {
+        this->ui->statusLabel->setText("WTF JUST HAPPENED?!?!??! REPORT MAXIM GONCHAR PLS");
+    }
 }
