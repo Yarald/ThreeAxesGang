@@ -6,308 +6,327 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>605</width>
-    <height>366</height>
+    <width>645</width>
+    <height>354</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>ControlPanel</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QLabel" name="label_7">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>340</y>
-      <width>61</width>
-      <height>21</height>
+      <x>11</x>
+      <y>11</y>
+      <width>621</width>
+      <height>304</height>
      </rect>
     </property>
-    <property name="text">
-     <string>DUSO 2016</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="statusLabel">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>240</y>
-      <width>281</width>
-      <height>91</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>100</width>
-      <height>80</height>
-     </size>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="text">
-     <string>First, connect to the BT module.</string>
-    </property>
-    <property name="textFormat">
-     <enum>Qt::RichText</enum>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-    <property name="wordWrap">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QWidget" name="">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>230</y>
-      <width>291</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <layout class="QVBoxLayout" name="verticalLayout_11">
      <item>
-      <widget class="QTimeEdit" name="timer_timeEdit">
-       <property name="displayFormat">
-        <string>hh:mm:ss</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="timer_comboBox">
+      <layout class="QHBoxLayout" name="horizontalLayout_8">
        <item>
-        <property name="text">
-         <string>Close program</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Turn On 1</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Turn On 2</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Turn On 3</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Turn On 4</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Turn On 5</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Turn On 6</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Turn On 7</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Turn On 8</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Change color 1</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Change color 2</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Change color 3</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Change color 4</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Change color 5</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Change color 6</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Change color 7</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Change color 8</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Switch All</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Change color all</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="submitTimer_button">
-       <property name="text">
-        <string>Submit</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QPushButton" name="systemOnButton">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>270</y>
-      <width>291</width>
-      <height>60</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>200</width>
-      <height>60</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>16777215</width>
-      <height>6</height>
-     </size>
-    </property>
-    <property name="text">
-     <string>ON</string>
-    </property>
-   </widget>
-   <widget class="QWidget" name="">
-    <property name="geometry">
-     <rect>
-      <x>14</x>
-      <y>13</y>
-      <width>581</width>
-      <height>197</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_6">
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout_8">
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_3">
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
          <item>
-          <widget class="QLabel" name="label">
-           <property name="layoutDirection">
-            <enum>Qt::LeftToRight</enum>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="text">
-            <string>Switch lamp[n]</string>
-           </property>
-           <property name="textFormat">
-            <enum>Qt::RichText</enum>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
-           </property>
-          </widget>
+          <layout class="QVBoxLayout" name="verticalLayout_8">
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <item>
+              <widget class="QLabel" name="label">
+               <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="text">
+                <string>Switch lamp[n]</string>
+               </property>
+               <property name="textFormat">
+                <enum>Qt::RichText</enum>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="wordWrap">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout">
+                 <item>
+                  <widget class="QPushButton" name="switchL1">
+                   <property name="text">
+                    <string>L1</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="switchL2">
+                   <property name="text">
+                    <string>L2</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="switchL3">
+                   <property name="text">
+                    <string>L3</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="switchL4">
+                   <property name="text">
+                    <string>L4</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_2">
+                 <item>
+                  <widget class="QPushButton" name="switchL5">
+                   <property name="text">
+                    <string>L5</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="switchL6">
+                   <property name="text">
+                    <string>L6</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="switchL7">
+                   <property name="text">
+                    <string>L7</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="switchL8">
+                   <property name="text">
+                    <string>L8</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <item>
+              <widget class="QLabel" name="label_2">
+               <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="text">
+                <string>Change color lamp[n]</string>
+               </property>
+               <property name="textFormat">
+                <enum>Qt::RichText</enum>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="wordWrap">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_2">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_4">
+                 <item>
+                  <widget class="QPushButton" name="changeClrL1">
+                   <property name="text">
+                    <string>L1</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="changeClrL2">
+                   <property name="text">
+                    <string>L2</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="changeClrL3">
+                   <property name="text">
+                    <string>L3</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="changeClrL4">
+                   <property name="text">
+                    <string>L4</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_5">
+                 <item>
+                  <widget class="QPushButton" name="changeClrL5">
+                   <property name="text">
+                    <string>L5</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="changeClrL6">
+                   <property name="text">
+                    <string>L6</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="changeClrL7">
+                   <property name="text">
+                    <string>L7</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="changeClrL8">
+                   <property name="text">
+                    <string>L8</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+          </layout>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout">
+          <layout class="QVBoxLayout" name="verticalLayout_9">
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout">
+            <layout class="QVBoxLayout" name="verticalLayout_5">
              <item>
-              <widget class="QPushButton" name="switchL1">
+              <widget class="QLabel" name="label_3">
+               <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
                <property name="text">
-                <string>L1</string>
+                <string>Change brightness</string>
+               </property>
+               <property name="textFormat">
+                <enum>Qt::RichText</enum>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="wordWrap">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="switchL2">
+              <layout class="QHBoxLayout" name="horizontalLayout_6">
+               <item>
+                <widget class="QPushButton" name="changeBrght_Plus">
+                 <property name="text">
+                  <string>+</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="changeBrght_Minus">
+                 <property name="text">
+                  <string>-</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_6">
+             <item>
+              <widget class="QLabel" name="label_4">
+               <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
                <property name="text">
-                <string>L2</string>
+                <string>Change all colors</string>
+               </property>
+               <property name="textFormat">
+                <enum>Qt::RichText</enum>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="wordWrap">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="switchL3">
+              <widget class="QPushButton" name="colorsAllButton">
                <property name="text">
-                <string>L3</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="switchL4">
-               <property name="text">
-                <string>L4</string>
+                <string>Colors all</string>
                </property>
               </widget>
              </item>
             </layout>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <layout class="QVBoxLayout" name="verticalLayout_7">
              <item>
-              <widget class="QPushButton" name="switchL5">
+              <widget class="QLabel" name="label_5">
+               <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
                <property name="text">
-                <string>L5</string>
+                <string>Switch all lamps</string>
+               </property>
+               <property name="textFormat">
+                <enum>Qt::RichText</enum>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="wordWrap">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="switchL6">
+              <widget class="QPushButton" name="switchAllButton">
                <property name="text">
-                <string>L6</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="switchL7">
-               <property name="text">
-                <string>L7</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="switchL8">
-               <property name="text">
-                <string>L8</string>
+                <string>Switch all</string>
                </property>
               </widget>
              </item>
@@ -318,9 +337,9 @@
         </layout>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_4">
+        <layout class="QVBoxLayout" name="verticalLayout_10">
          <item>
-          <widget class="QLabel" name="label_2">
+          <widget class="QLabel" name="label_6">
            <property name="layoutDirection">
             <enum>Qt::LeftToRight</enum>
            </property>
@@ -328,7 +347,7 @@
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="text">
-            <string>Change color lamp[n]</string>
+            <string>Animations</string>
            </property>
            <property name="textFormat">
             <enum>Qt::RichText</enum>
@@ -342,182 +361,46 @@
           </widget>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout_2">
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_4">
-             <item>
-              <widget class="QPushButton" name="changeClrL1">
-               <property name="text">
-                <string>L1</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="changeClrL2">
-               <property name="text">
-                <string>L2</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="changeClrL3">
-               <property name="text">
-                <string>L3</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="changeClrL4">
-               <property name="text">
-                <string>L4</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_5">
-             <item>
-              <widget class="QPushButton" name="changeClrL5">
-               <property name="text">
-                <string>L5</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="changeClrL6">
-               <property name="text">
-                <string>L6</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="changeClrL7">
-               <property name="text">
-                <string>L7</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="changeClrL8">
-               <property name="text">
-                <string>L8</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout_9">
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_5">
-         <item>
-          <widget class="QLabel" name="label_3">
-           <property name="layoutDirection">
-            <enum>Qt::LeftToRight</enum>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="text">
-            <string>Change brightness</string>
-           </property>
-           <property name="textFormat">
-            <enum>Qt::RichText</enum>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QSlider" name="btght_slider">
-           <property name="minimum">
-            <number>1</number>
-           </property>
-           <property name="maximum">
-            <number>6</number>
-           </property>
-           <property name="sliderPosition">
-            <number>6</number>
-           </property>
+          <spacer name="verticalSpacer">
            <property name="orientation">
-            <enum>Qt::Horizontal</enum>
+            <enum>Qt::Vertical</enum>
            </property>
-          </widget>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>27</height>
+            </size>
+           </property>
+          </spacer>
          </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_6">
          <item>
-          <widget class="QLabel" name="label_4">
-           <property name="layoutDirection">
-            <enum>Qt::LeftToRight</enum>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
+          <widget class="QPushButton" name="pingPongButton">
            <property name="text">
-            <string>Change all colors</string>
-           </property>
-           <property name="textFormat">
-            <enum>Qt::RichText</enum>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
+            <string>PingPong</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="colorsAllButton">
+          <widget class="QPushButton" name="newYearButton">
            <property name="text">
-            <string>Colors all</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_7">
-         <item>
-          <widget class="QLabel" name="label_5">
-           <property name="layoutDirection">
-            <enum>Qt::LeftToRight</enum>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
-           </property>
-           <property name="text">
-            <string>Switch all lamps</string>
-           </property>
-           <property name="textFormat">
-            <enum>Qt::RichText</enum>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
+            <string>New year</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="switchAllButton">
+          <widget class="QPushButton" name="chaserButton">
            <property name="text">
-            <string>Switch all</string>
+            <string>Chaser</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="sorcererButton">
+           <property name="text">
+            <string>Sorcerer</string>
            </property>
           </widget>
          </item>
@@ -526,9 +409,28 @@
       </layout>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_10">
+      <layout class="QHBoxLayout" name="horizontalLayout_9">
        <item>
-        <widget class="QLabel" name="label_6">
+        <widget class="QPushButton" name="systemOnButton">
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>120</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>ON</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="statusLabel">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>100</height>
+          </size>
+         </property>
          <property name="layoutDirection">
           <enum>Qt::LeftToRight</enum>
          </property>
@@ -536,7 +438,7 @@
           <enum>QFrame::StyledPanel</enum>
          </property>
          <property name="text">
-          <string>Animations</string>
+          <string>Click something!</string>
          </property>
          <property name="textFormat">
           <enum>Qt::RichText</enum>
@@ -549,60 +451,22 @@
          </property>
         </widget>
        </item>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>27</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="flickeringButton">
-         <property name="text">
-          <string>Flickering</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pingPongButton">
-         <property name="text">
-          <string>PingPong</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="newYearButton">
-         <property name="text">
-          <string>New year</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="chaserButton">
-         <property name="text">
-          <string>Chaser</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="sorcererButton">
-         <property name="text">
-          <string>Sorcerer</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </item>
     </layout>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>330</y>
+      <width>61</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>DUSO 2016</string>
+    </property>
    </widget>
   </widget>
  </widget>

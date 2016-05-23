@@ -226,12 +226,6 @@ void loop()
               break;
             }
             else if (modeByte == 'v') {
-              for (int i = 0; i < 5; i++) {
-                fade();
-              }
-              break;
-            }
-            else if (modeByte == 'm') {
               sorcerer();
               break;
             }
@@ -386,9 +380,9 @@ void lamp_switchLamp(Lamp *curLamp)
 
 void lamp_changeBrightness(int num)
 {
-  curBrightness = 5 + (num - 1) * 50;
-  Serial.print("Calculated: ");
-  Serial.println(curBrightness);
+    curBrightness = 5 + (num - 1) * 50;
+    Serial.print("Calculated: ");
+    Serial.println(curBrightness);
 }
 
 void lamp_changeColor(Lamp *curLamp)
@@ -755,50 +749,3 @@ void sorcerer() {
   }
   //
 }
-
-//FADE animation func
-void fade() {
-  int allSR[3][8] = {
-    { 0, 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0, 0 },
-    { 0, 0, 0, 0, 0, 0, 0, 0 }
-  };
-  int k;
-
-  for (int i = 0; i < 3; i++) {
-    k = i;
-    for (int j = 0; j < 3; j++) {
-      for (; k < 8; k += 3) {
-        allSR[j][k] = pow(2, k);
-        if (k >= 2) {
-          allSR[j][k] += 1;
-        }
-      }
-      k = k % 8;
-    }
-    digitalWrite(LATCHPIN, LOW);
-    shiftOut(DATAPIN, CLOCKPIN, MSBFIRST, srDataSum(allSR[2]));
-    shiftOut(DATAPIN, CLOCKPIN, MSBFIRST, srDataSum(allSR[1]));
-    shiftOut(DATAPIN, CLOCKPIN, MSBFIRST, srDataSum(allSR[0]));
-    digitalWrite(LATCHPIN, HIGH);
-
-    // brightness changing
-    for (int l = BRGHT_MIN; l < BRGHT_MAX; l++) {
-      analogWrite(BRGHT_PIN, l);
-      delay(1);
-    }
-    for (int l = BRGHT_MAX; l > BRGHT_MIN; l--) {
-      analogWrite(BRGHT_PIN, l);
-      delay(1);
-    }
-
-    // reseting all numbers back to zero
-    for (int j = 0; j < 3; j++) {
-      for (int l = 0; l < 8; l++) {
-        allSR[j][l] = 0;
-      }
-    }
-
-  }
-}
-
