@@ -180,7 +180,7 @@ void ControlPanel::on_sorcererButton_clicked()
 {
     QString temp = "Song was turned on.\n";
     // Load the file
-    player->setMedia(QUrl::fromLocalFile("C:/Users/maxgo/Desktop/sorcerer.mp3"));
+    player->setMedia(QUrl::fromLocalFile("sorcerer.mp3"));
     player->play();
     ui->statusLabel->setText(player->errorString());
 
